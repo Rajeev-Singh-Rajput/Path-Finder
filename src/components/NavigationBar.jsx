@@ -8,18 +8,16 @@ function NavigationBar({
   selectedAlgorithm,
   setSelectedAlgorithm,
 }) {
-  // Add Dijkstra and A* here
   const algorithmOptions = ['BFS', 'DFS', 'Dijkstra', 'A*'];
 
   return (
     <header className="bg-gray-50 shadow p-4">
       <nav className="flex items-center justify-between">
-        {/* Logo / Title */}
+        {/* Logo */}
         <a href="/" className="text-2xl font-bold text-gray-800">
           Find the Way
         </a>
 
-        {/* Controls */}
         <div className="flex items-center space-x-4">
           <button
             onClick={onVisualize}
@@ -51,7 +49,6 @@ function NavigationBar({
             Generate Maze
           </button>
 
-          {/* Algorithm Selector */}
           <div className="flex items-center space-x-2">
             <label
               htmlFor="algorithm-select"

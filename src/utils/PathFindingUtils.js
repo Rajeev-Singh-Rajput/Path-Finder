@@ -1,4 +1,3 @@
-// src/utils/PathFindingUtils.js
 export function animateCells(cellList, newType, delay, setGrid) {
   return new Promise(resolve => {
     let i = 0;
@@ -15,7 +14,6 @@ export function animateCells(cellList, newType, delay, setGrid) {
       }
       const { row, col } = cell;
       setGrid(prevGrid => {
-        // Create a deep copy of the grid.
         const newGrid = prevGrid.map(r => r.map(c => ({ ...c })));
         if (newGrid[row] && newGrid[row][col] && newGrid[row][col].type !== 'wall') {
           newGrid[row][col].type = newType;

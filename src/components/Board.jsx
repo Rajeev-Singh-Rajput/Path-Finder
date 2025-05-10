@@ -1,10 +1,8 @@
-// src/components/Board.jsx
 import React, { useEffect, useRef } from 'react';
 
 function Board({ cellWidth = 22, grid, setGrid, onGridUpdate }) {
   const boardRef = useRef(null);
 
-  // Initialize grid: each cell has { row, col, type, weight }
   const createGrid = () => {
     if (!boardRef.current) return;
     const boardWidth = boardRef.current.clientWidth;
@@ -19,8 +17,8 @@ function Board({ cellWidth = 22, grid, setGrid, onGridUpdate }) {
         rowCells.push({
           row: r,
           col: c,
-          type: 'unvisited', // 'unvisited' | 'visited' | 'path' | 'wall'
-          weight: 1,         // 1–5
+          type: 'unvisited',
+          weight: 1,
         });
       }
       newGrid.push(rowCells);
@@ -33,7 +31,6 @@ function Board({ cellWidth = 22, grid, setGrid, onGridUpdate }) {
     createGrid();
   }, [cellWidth]);
 
-  // Click cycles weight 1→2→3→4→5→wall→1
   const handleCellClick = (r, c) => {
     setGrid(prev =>
       prev.map(row =>
@@ -55,7 +52,6 @@ function Board({ cellWidth = 22, grid, setGrid, onGridUpdate }) {
     );
   };
 
-  // Determine background color
   const bgColor = (cell) => {
     if (cell.type === 'wall') return '#34495e';
     if (cell.type === 'visited') return 'rgba(0,190,218,0.75)';
@@ -85,7 +81,6 @@ function Board({ cellWidth = 22, grid, setGrid, onGridUpdate }) {
                 backgroundColor: bgColor(cell),
               }}
             >
-              {/* show weight if >1 */}
               {cell.type !== 'wall' && cell.weight > 1 ? cell.weight : ''}
             </div>
           ))}

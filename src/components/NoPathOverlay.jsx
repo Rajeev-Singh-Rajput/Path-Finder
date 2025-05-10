@@ -1,4 +1,3 @@
-// src/components/NoPathOverlay.jsx
 import React from 'react';
 
 function NoPathOverlay({ onClose }) {

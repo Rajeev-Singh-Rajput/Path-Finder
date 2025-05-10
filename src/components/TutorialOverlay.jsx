@@ -1,7 +1,5 @@
-// src/components/TutorialOverlay.jsx
 import React, { useState } from 'react';
 
-// Define your slides as an array of objects.
 const slides = [
   {
     title: 'Welcome to Find the Way!',
@@ -20,7 +18,6 @@ const slides = [
 function TutorialOverlay({ onClose }) {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  // Go to the next slide, or close the tutorial if it’s the last slide.
   const nextSlide = () => {
     if (currentSlide === slides.length - 1) {
       onClose();
@@ -29,7 +26,6 @@ function TutorialOverlay({ onClose }) {
     }
   };
 
-  // Go to the previous slide if not on the first one.
   const prevSlide = () => {
     if (currentSlide > 0) {
       setCurrentSlide(currentSlide - 1);

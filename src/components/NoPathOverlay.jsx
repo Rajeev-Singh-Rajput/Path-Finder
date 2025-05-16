@@ -6,7 +6,7 @@ export default function NoPathOverlay({ onClose }) {
       <div className="bg-white rounded-lg shadow-lg max-w-sm w-full p-6">
         <h2 className="text-lg font-semibold mb-3">No Path Found</h2>
         <p className="mb-4 text-gray-700">
-          There’s no valid path. Try clearing some walls or regenerating the maze.
+          There’s no valid path! Try clearing some walls or regenerating the maze.
         </p>
         <button
           onClick={onClose}

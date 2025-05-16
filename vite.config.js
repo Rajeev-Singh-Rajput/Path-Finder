@@ -6,6 +6,6 @@ export default defineConfig({
   base: "/path-finder/",
   plugins: [
     tailwindcss(),
-    react()
+    react(),
   ],
 })

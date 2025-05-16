@@ -3,48 +3,40 @@ import React, { useEffect, useRef } from 'react';
 function Board({ cellWidth = 22, grid, setGrid, onGridUpdate }) {
   const boardRef = useRef(null);
 
-  const createGrid = () => {
-    if (!boardRef.current) return;
-    const boardWidth = boardRef.current.clientWidth;
-    const boardHeight = boardRef.current.clientHeight;
-    const cols = Math.floor(boardWidth / cellWidth);
-    const rows = Math.floor(boardHeight / cellWidth);
-
-    const newGrid = [];
-    for (let r = 0; r < rows; r++) {
-      const rowCells = [];
-      for (let c = 0; c < cols; c++) {
-        rowCells.push({
-          row: r,
-          col: c,
-          type: 'unvisited',
-          weight: 1,
-        });
-      }
-      newGrid.push(rowCells);
-    }
-    setGrid(newGrid);
-    onGridUpdate(newGrid);
-  };
-
+  // Initialize grid on mount or resize
   useEffect(() => {
+    const createGrid = () => {
+      if (!boardRef.current) return;
+      const width = boardRef.current.clientWidth;
+      const cols = Math.floor(width / cellWidth);
+      const rows = Math.floor((window.innerHeight - 200) / cellWidth);
+      const newGrid = [];
+      for (let r = 0; r < rows; r++) {
+        const row = [];
+        for (let c = 0; c < cols; c++) {
+          row.push({ row: r, col: c, type: 'unvisited', weight: 1 });
+        }
+        newGrid.push(row);
+      }
+      setGrid(newGrid);
+      onGridUpdate(newGrid);
+    };
+
     createGrid();
+    window.addEventListener('resize', createGrid);
+    return () => window.removeEventListener('resize', createGrid);
   }, [cellWidth]);
 
-  const handleCellClick = (r, c) => {
-    setGrid(prev =>
-      prev.map(row =>
-        row.map(cell => {
-          if (cell.row === r && cell.col === c) {
-            if (cell.type === 'wall') {
-              return { ...cell, type: 'unvisited', weight: 1 };
-            }
-            const nextWeight = cell.weight === 5 ? null : cell.weight + 1;
-            if (nextWeight == null) {
-              return { ...cell, type: 'wall', weight: 1 };
-            } else {
-              return { ...cell, type: 'unvisited', weight: nextWeight };
-            }
+  // Cell click toggles weight/wall
+  const handleClick = (r, c) => {
+    setGrid(g =>
+      g.map((row, ri) =>
+        row.map((cell, ci) => {
+          if (ri === r && ci === c) {
+            if (cell.type === 'wall') return { ...cell, type: 'unvisited', weight: 1 };
+            const next = cell.weight === 5 ? null : cell.weight + 1;
+            if (next == null) return { ...cell, type: 'wall', weight: 1 };
+            return { ...cell, type: 'unvisited', weight: next };
           }
           return cell;
         })
@@ -52,40 +44,42 @@ function Board({ cellWidth = 22, grid, setGrid, onGridUpdate }) {
     );
   };
 
-  const bgColor = (cell) => {
-    if (cell.type === 'wall') return '#34495e';
-    if (cell.type === 'visited') return 'rgba(0,190,218,0.75)';
-    if (cell.type === 'path')    return 'rgb(50, 168, 82)';
-    // unvisited with weight >1
-    if (cell.weight > 1)
-      return `rgba(100,100,100,${cell.weight * 0.15})`;
-    return 'transparent';
+  // Determine cell background
+  const bgColor = cell => {
+    if (cell.type === 'wall') return 'bg-gray-800';
+    if (cell.type === 'visited') return 'bg-blue-400';
+    if (cell.type === 'path') return 'bg-green-400';
+    if (cell.weight > 1) return `bg-gray-500 bg-opacity-${cell.weight * 10}`;
+    return 'bg-transparent';
   };
 
   return (
     <div
       ref={boardRef}
-      className="board-container p-4 border border-gray-300 overflow-auto"
-      style={{ minHeight: '300px' }}
+      className="w-full overflow-auto p-2"
+      style={{ height: 'calc(100vh - 100px)' }}
     >
-      {grid.map((row, ri) => (
-        <div key={`row-${ri}`} className="flex">
-          {row.map((cell, ci) => (
-            <div
-              key={`cell-${ri}-${ci}`}
-              onClick={() => handleCellClick(ri, ci)}
-              className="cell border border-gray-200 flex items-center justify-center text-xs select-none cursor-pointer"
-              style={{
-                width: `${cellWidth}px`,
-                height: `${cellWidth}px`,
-                backgroundColor: bgColor(cell),
-              }}
-            >
-              {cell.type !== 'wall' && cell.weight > 1 ? cell.weight : ''}
-            </div>
-          ))}
-        </div>
-      ))}
+      <div
+        className="inline-grid"
+        style={{
+          gridTemplateColumns: `repeat(${grid[0]?.length || 0}, ${cellWidth}px)`,
+          gridAutoRows: `${cellWidth}px`,
+        }}
+      >
+        {grid.flat().map(cell => (
+          <div
+            key={`${cell.row}-${cell.col}`}
+            onClick={() => handleClick(cell.row, cell.col)}
+            className={`${bgColor(cell)} border border-gray-200`}
+          >
+            {cell.weight > 1 && cell.type !== 'wall' && (
+              <span className="text-xs text-gray-900">
+                {cell.weight}
+              </span>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

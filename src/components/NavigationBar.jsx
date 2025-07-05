@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 function NavigationBar({
   onVisualize,
@@ -8,13 +8,13 @@ function NavigationBar({
   selectedAlgorithm,
   setSelectedAlgorithm,
 }) {
-  const algorithmOptions = ['BFS', 'DFS', 'Dijkstra', 'A*'];
+  const algorithmOptions = ["BFS", "DFS", "Dijkstra", "A*"];
 
   return (
     <header className="bg-white shadow">
       <div className="container mx-auto px-4 py-3 flex flex-wrap items-center justify-between">
         {/* Title */}
-        <a href="/" className="text-2xl font-bold text-gray-800">
+        <a href="/" className="text-2xl font-bold text-blue-600">
           Find the Way
         </a>
 
@@ -22,43 +22,46 @@ function NavigationBar({
         <div className="flex flex-wrap items-center gap-2 mt-2 md:mt-0">
           <button
             onClick={onVisualize}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded text-sm"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded text-sm cursor-pointer"
           >
-            {selectedAlgorithm ? `Visualize ${selectedAlgorithm}` : 'Visualize'}
+            {selectedAlgorithm ? `Visualize ${selectedAlgorithm}` : "Visualize"}
           </button>
 
           <button
             onClick={onClearPath}
-            className="text-gray-700 hover:text-gray-900 font-medium text-sm px-2"
+            className="text-gray-700 hover:text-gray-900 font-medium text-sm px-2 cursor-pointer"
           >
             Clear Path
           </button>
 
           <button
             onClick={onClearBoard}
-            className="text-gray-700 hover:text-gray-900 font-medium text-sm px-2"
+            className="text-gray-700 hover:text-gray-900 font-medium text-sm px-2 cursor-pointer"
           >
             Clear Board
           </button>
 
           <button
             onClick={onGenerateMaze}
-            className="text-gray-700 hover:text-gray-900 font-medium text-sm px-2"
+            className="text-gray-700 hover:text-gray-900 font-medium text-sm px-2 cursor-pointer"
           >
             Generate Maze
           </button>
 
           {/* Algorithm Selector */}
-          <label htmlFor="algorithm" className="sr-only">
-            Algorithm
+          <label
+            htmlFor="algorithm"
+            className="text-gray-700 font-medium text-sm px-2"
+          >
+            Algorithm:
           </label>
+
           <select
             id="algorithm"
             value={selectedAlgorithm}
             onChange={(e) => setSelectedAlgorithm(e.target.value)}
             className="border border-gray-300 rounded px-3 py-1 text-gray-800 text-sm bg-white"
           >
-            <option value="">Select Algorithm</option>
             {algorithmOptions.map((algo) => (
               <option key={algo} value={algo}>
                 {algo}
@@ -68,8 +71,7 @@ function NavigationBar({
         </div>
       </div>
     </header>
-);
-
+  );
 }
 
 export default NavigationBar;

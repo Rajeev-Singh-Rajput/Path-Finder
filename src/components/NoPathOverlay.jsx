@@ -10,7 +10,7 @@ export default function NoPathOverlay({ onClose }) {
         </p>
         <button
           onClick={onClose}
-          className="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded w-full"
+          className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded w-full"
         >
           Okay
         </button>

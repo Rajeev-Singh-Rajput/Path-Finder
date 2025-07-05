@@ -1,22 +1,17 @@
-import React, { useState } from 'react';
-import NavigationBar from './components/NavigationBar';
-import Board from './components/Board';
-import TutorialOverlay from './components/TutorialOverlay';
-import NoPathOverlay from './components/NoPathOverlay';
-import { generateMaze } from './algorithms/MazeGenerator';
-import {
-  BFS,
-  DFS,
-  Dijkstra,
-  Astar,
-} from './algorithms/PathFindingAlgorithms';
-import { animateCells } from './utils/PathFindingUtils';
+import React, { useState } from "react";
+import NavigationBar from "./components/NavigationBar";
+import Board from "./components/Board";
+import TutorialOverlay from "./components/TutorialOverlay";
+import NoPathOverlay from "./components/NoPathOverlay";
+import { generateMaze } from "./algorithms/MazeGenerator";
+import { BFS, DFS, Dijkstra, Astar } from "./algorithms/PathFindingAlgorithms";
+import { animateCells } from "./utils/PathFindingUtils";
 
 function App() {
   const [showTutorial, setShowTutorial] = useState(true);
   const [showNoPath, setShowNoPath] = useState(false);
   const [grid, setGrid] = useState([]);
-  const [selectedAlgorithm, setSelectedAlgorithm] = useState('BFS'); // default
+  const [selectedAlgorithm, setSelectedAlgorithm] = useState("BFS");
 
   // Called by Board when it creates the initial grid
   const handleGridUpdate = (newGrid) => {
@@ -33,8 +28,8 @@ function App() {
     setGrid((prev) =>
       prev.map((row) =>
         row.map((cell) =>
-          cell.type === 'visited' || cell.type === 'path'
-            ? { ...cell, type: 'unvisited' }
+          cell.type === "visited" || cell.type === "path"
+            ? { ...cell, type: "unvisited" }
             : cell
         )
       )
@@ -54,16 +49,16 @@ function App() {
 
     let result;
     switch (selectedAlgorithm) {
-      case 'BFS':
+      case "BFS":
         result = BFS(grid, source, target);
         break;
-      case 'DFS':
+      case "DFS":
         result = DFS(grid, source, target);
         break;
-      case 'Dijkstra':
+      case "Dijkstra":
         result = Dijkstra(grid, source, target);
         break;
-      case 'A*':
+      case "A*":
         result = Astar(grid, source, target);
         break;
       default:
@@ -73,11 +68,11 @@ function App() {
     const { searchAnimation, pathAnimation } = result;
     const delay = 50;
 
-    animateCells(searchAnimation, 'visited', delay, setGrid).then(() => {
+    animateCells(searchAnimation, "visited", delay, setGrid).then(() => {
       if (!pathAnimation.length) {
         setShowNoPath(true);
       } else {
-        animateCells(pathAnimation, 'path', delay, setGrid);
+        animateCells(pathAnimation, "path", delay, setGrid);
       }
     });
   };
@@ -88,9 +83,7 @@ function App() {
 
   const handleClearBoard = () => {
     setGrid((prev) =>
-      prev.map((row) =>
-        row.map((cell) => ({ ...cell, type: 'unvisited' }))
-      )
+      prev.map((row) => row.map((cell) => ({ ...cell, type: "unvisited" })))
     );
   };
 
@@ -99,9 +92,7 @@ function App() {
       {showTutorial && (
         <TutorialOverlay onClose={() => setShowTutorial(false)} />
       )}
-      {showNoPath && (
-        <NoPathOverlay onClose={() => setShowNoPath(false)} />
-      )}
+      {showNoPath && <NoPathOverlay onClose={() => setShowNoPath(false)} />}
 
       <NavigationBar
         onVisualize={handleVisualize}
@@ -112,11 +103,7 @@ function App() {
         setSelectedAlgorithm={setSelectedAlgorithm}
       />
 
-      <Board
-        grid={grid}
-        setGrid={setGrid}
-        onGridUpdate={handleGridUpdate}
-      />
+      <Board grid={grid} setGrid={setGrid} onGridUpdate={handleGridUpdate} />
     </div>
   );
 }

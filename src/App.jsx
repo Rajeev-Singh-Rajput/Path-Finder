@@ -88,7 +88,7 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className="App bg-gray-100">
       {showTutorial && (
         <TutorialOverlay onClose={() => setShowTutorial(false)} />
       )}

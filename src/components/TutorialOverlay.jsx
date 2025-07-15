@@ -10,6 +10,10 @@ const slides = [
     text: 'Click on the grid to toggle walls. Walls block the path, and the algorithm will avoid them.'
   },
   {
+    title: 'Select desired Algorithm',
+    text: 'Click on the dropdown menu visible on the right side and choose desired algorithm to visualize it. By default it will be BFS.'
+  },
+  {
     title: 'Visualize Algorithms',
     text: 'Press the "Visualize" button to see the algorithm in action. You can also clear the board or generate mazes.'
   }

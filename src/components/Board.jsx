@@ -75,7 +75,7 @@ function Board({ cellWidth = 22, grid, setGrid, onGridUpdate }) {
             onClick={() => handleClick(cell.row, cell.col)}
             className={`${bgColor(
               cell
-            )} border border-gray-200 focus:outline-none`}
+            )} border border-gray-300 focus:outline-none`}
             style={{ width: cellWidth, height: cellWidth }}
             aria-label={`Cell ${cell.row}, ${cell.col}`}
           >

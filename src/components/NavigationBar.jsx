@@ -11,8 +11,8 @@ function NavigationBar({
   const algorithmOptions = ["BFS", "DFS", "Dijkstra", "A*"];
 
   return (
-    <header className="bg-white shadow">
-      <div className="container mx-auto px-4 py-3 flex flex-wrap items-center justify-between">
+    <header className="backdrop-blur-xs">
+      <div className="container mx-auto px-4 py-3 flex flex-wrap items-center justify-between border-b-2 border-blue-300 mb-10 ">
         {/* Title */}
         <a href="/" className="text-2xl font-bold text-blue-600">
           Find the Way

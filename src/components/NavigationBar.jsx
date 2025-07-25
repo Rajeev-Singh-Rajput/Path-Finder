@@ -12,7 +12,7 @@ function NavigationBar({
 
   return (
     <header className="backdrop-blur-xs">
-      <div className="container mx-auto px-4 py-3 flex flex-wrap items-center justify-between border-b-2 border-blue-300 mb-10 ">
+      <div className="container mx-auto px-4 py-3 flex flex-wrap items-center justify-between border-b-2 border-blue-300 mb-2 ">
         {/* Title */}
         <a href="/" className="text-2xl font-bold text-blue-600">
           Find the Way
@@ -29,21 +29,21 @@ function NavigationBar({
 
           <button
             onClick={onClearPath}
-            className="text-gray-700 hover:text-gray-900 font-medium text-sm px-2 cursor-pointer"
+            className="text-gray-700 hover:text-blue-600 font-medium text-sm px-2 cursor-pointer"
           >
             Clear Path
           </button>
 
           <button
             onClick={onClearBoard}
-            className="text-gray-700 hover:text-gray-900 font-medium text-sm px-2 cursor-pointer"
+            className="text-gray-700 hover:text-blue-600 font-medium text-sm px-2 cursor-pointer"
           >
             Clear Board
           </button>
 
           <button
             onClick={onGenerateMaze}
-            className="text-gray-700 hover:text-gray-900 font-medium text-sm px-2 cursor-pointer"
+            className="text-gray-700 hover:text-blue-600 font-medium text-sm px-2 cursor-pointer"
           >
             Generate Maze
           </button>

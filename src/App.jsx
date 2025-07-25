@@ -6,6 +6,8 @@ import NoPathOverlay from "./components/NoPathOverlay";
 import { generateMaze } from "./algorithms/MazeGenerator";
 import { BFS, DFS, Dijkstra, Astar } from "./algorithms/PathFindingAlgorithms";
 import { animateCells } from "./utils/PathFindingUtils";
+import GuideBar from "./components/Guidebar";
+
 
 function App() {
   const [showTutorial, setShowTutorial] = useState(true);
@@ -66,7 +68,7 @@ function App() {
     }
 
     const { searchAnimation, pathAnimation } = result;
-    const delay = 50;
+    const delay = 20;
 
     animateCells(searchAnimation, "visited", delay, setGrid).then(() => {
       if (!pathAnimation.length) {
@@ -102,7 +104,8 @@ function App() {
         selectedAlgorithm={selectedAlgorithm}
         setSelectedAlgorithm={setSelectedAlgorithm}
       />
-
+      
+      <GuideBar/>
       <Board grid={grid} setGrid={setGrid} onGridUpdate={handleGridUpdate} />
     </div>
   );

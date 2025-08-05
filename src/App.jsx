@@ -6,7 +6,7 @@ import NoPathOverlay from "./components/NoPathOverlay";
 import { generateMaze } from "./algorithms/MazeGenerator";
 import { BFS, DFS, Dijkstra, Astar } from "./algorithms/PathFindingAlgorithms";
 import { animateCells } from "./utils/PathFindingUtils";
-import GuideBar from "./components/Guidebar";
+import GuideBar from "./components/GuideBar";
 
 
 function App() {

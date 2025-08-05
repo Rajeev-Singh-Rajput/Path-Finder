@@ -157,7 +157,7 @@ export function Astar(grid, source, target) {
   const fScore = Array.from({ length: grid.length }, () =>
     Array(grid[0].length).fill(Infinity)
   ); // “F” stands for the estimated total cost of the cheapest path through node n to the goal.
-  
+
   const visited = new Set();
   const parent = new Map();
 
@@ -190,7 +190,7 @@ export function Astar(grid, source, target) {
 
         if (tentativeG < gScore[n.row][n.col]) {
           gScore[n.row][n.col] = tentativeG; 
-          fScore[n.row][n.col] = tentativeG + heuristic(n, target); // f(n)=g(n)+h(n) 
+          fScore[n.row][n.col] = tentativeG + heuristic(n, target); // f(n) = g(n) + h(n) 
           parent.set(`${n.row}-${n.col}`, current);
           openSet.push({ cell: n, f: fScore[n.row][n.col] });
         }

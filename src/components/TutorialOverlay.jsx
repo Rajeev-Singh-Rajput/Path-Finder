@@ -37,7 +37,7 @@ function TutorialOverlay({ onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-blue/10 backdrop-blur-xs z-50">
       <div className="bg-white p-8 rounded shadow max-w-md w-full">
         <h2 className="text-xl font-bold mb-4">{slides[currentSlide].title}</h2>
         <p className="mb-4">{slides[currentSlide].text}</p>

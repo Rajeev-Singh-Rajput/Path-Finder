@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-  base: '/path-finder/',
+  base: '/Path-Finder/',
   plugins: [
     tailwindcss(),
     react(),

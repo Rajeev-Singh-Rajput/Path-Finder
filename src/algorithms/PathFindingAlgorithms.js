@@ -96,6 +96,8 @@ export function DFS(grid, source, target) {
   return { searchAnimation, pathAnimation };
 }
 
+import { MinPriorityQueue } from '@datastructures-js/priority-queue';
+
 export function Dijkstra(grid, source, target) {
   const searchAnimation = [];
   const pathAnimation = [];
@@ -106,16 +108,21 @@ export function Dijkstra(grid, source, target) {
   const parent = new Map();
 
   dist[source.row][source.col] = 0;
-  const pq = [{ cell: source, cost: 0 }];
 
-  while (pq.length) {
-    pq.sort((a, b) => a.cost - b.cost);
-    const { cell: current } = pq.shift();
+  // Min-heap priority queue (stores {cell, cost})
+  const pq = new MinPriorityQueue(({ cost }) => cost);
+  pq.enqueue({ cell: source, cost: 0 });
+
+  while (!pq.isEmpty()) {
+    const { cell: current } = pq.dequeue();
+
     const key = `${current.row}-${current.col}`;
+
     if (visited.has(key)) continue;
     visited.add(key);
     searchAnimation.push(current);
 
+    // If target is reached, reconstruct path
     if (current.row === target.row && current.col === target.col) {
       let cur = current;
       while (cur) {
@@ -126,14 +133,14 @@ export function Dijkstra(grid, source, target) {
       break;
     }
 
+    // Explore neighbors
     for (const n of getNeighbours(current)) {
       if (isValid(n.row, n.col, grid) && grid[n.row][n.col].type !== "wall") {
-        const newDist =
-          dist[current.row][current.col] + grid[n.row][n.col].weight;
+        const newDist = dist[current.row][current.col] + grid[n.row][n.col].weight;
         if (newDist < dist[n.row][n.col]) {
           dist[n.row][n.col] = newDist;
           parent.set(`${n.row}-${n.col}`, current);
-          pq.push({ cell: n, cost: newDist });
+          pq.enqueue({ cell: n, cost: newDist });
         }
       }
     }
@@ -141,6 +148,7 @@ export function Dijkstra(grid, source, target) {
 
   return { searchAnimation, pathAnimation };
 }
+
 
 function heuristic(a, b) {
   return Math.abs(a.row - b.row) + Math.abs(a.col - b.col);
@@ -163,16 +171,19 @@ export function Astar(grid, source, target) {
 
   gScore[source.row][source.col] = 0;
   fScore[source.row][source.col] = heuristic(source, target);
-  const openSet = [{ cell: source, f: fScore[source.row][source.col] }];
 
-  while (openSet.length) {
-    openSet.sort((a, b) => a.f - b.f);
-    const { cell: current } = openSet.shift();
+  // Min-heap priority queue (stores {cell, f})
+  const openSet = new MinPriorityQueue(({ f }) => f);
+  openSet.enqueue({ cell: source, f: fScore[source.row][source.col] });
+
+  while (!openSet.isEmpty()) {
+    const { cell: current } = openSet.dequeue(); // ✅ no .element
     const key = `${current.row}-${current.col}`;
     if (visited.has(key)) continue;
     visited.add(key);
     searchAnimation.push(current);
 
+    // If target is reached, reconstruct the path
     if (current.row === target.row && current.col === target.col) {
       let cur = current;
       while (cur) {
@@ -183,6 +194,7 @@ export function Astar(grid, source, target) {
       break;
     }
 
+    // Explore neighbors
     for (const n of getNeighbours(current)) {
       if (isValid(n.row, n.col, grid) && grid[n.row][n.col].type !== "wall") {
         const tentativeG =
@@ -192,7 +204,7 @@ export function Astar(grid, source, target) {
           gScore[n.row][n.col] = tentativeG; 
           fScore[n.row][n.col] = tentativeG + heuristic(n, target); // f(n) = g(n) + h(n) 
           parent.set(`${n.row}-${n.col}`, current);
-          openSet.push({ cell: n, f: fScore[n.row][n.col] });
+          openSet.enqueue({ cell: n, f: fScore[n.row][n.col] });
         }
       }
     }

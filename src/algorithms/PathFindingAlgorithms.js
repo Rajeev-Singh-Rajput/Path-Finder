@@ -174,12 +174,18 @@ export function Astar(grid, source, target) {
 
   // Min-heap priority queue (stores {cell, f})
   const openSet = new MinPriorityQueue(({ f }) => f);
+  // Open Set → Nodes that have been discovered but not yet fully explored.
+  // They are "open" for consideration, meaning the algorithm still needs to decide the best path through them.
+  // Closed Set → Nodes that have already been visited and processed.
+  // Once a node is in the closed set, we don’t need to revisit it, since we’ve already found the optimal way to reach it.
   openSet.enqueue({ cell: source, f: fScore[source.row][source.col] });
 
   while (!openSet.isEmpty()) {
-    const { cell: current } = openSet.dequeue(); // ✅ no .element
+    const { cell: current } = openSet.dequeue();
+    
     const key = `${current.row}-${current.col}`;
     if (visited.has(key)) continue;
+
     visited.add(key);
     searchAnimation.push(current);
 

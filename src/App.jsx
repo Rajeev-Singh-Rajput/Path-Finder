@@ -68,7 +68,7 @@ function App() {
     }
 
     const { searchAnimation, pathAnimation } = result;
-    const delay = 20;
+    const delay = 30;
 
     animateCells(searchAnimation, "visited", delay, setGrid).then(() => {
       if (!pathAnimation.length) {
